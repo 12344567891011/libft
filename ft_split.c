@@ -6,11 +6,12 @@
 /*   By: atahtouh <atahtouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 11:33:47 by atahtouh          #+#    #+#             */
-/*   Updated: 2023/11/13 10:12:36 by atahtouh         ###   ########.fr       */
+/*   Updated: 2023/11/17 09:23:37 by atahtouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
+
 int ft_count(char *s, char c)
 {
 	int i;
@@ -34,7 +35,7 @@ char *alloc_mot(char *s)
 	char *ptr;
 	
 	i = 0;
-	ptr = (char*)malloc(ft_strlen(s) * sizeof(char));
+	ptr = (char*)malloc((ft_strlen(s) + 1) * sizeof(char));
 	if(ptr == NULL)
 	{
 		return (NULL);

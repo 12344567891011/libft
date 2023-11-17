@@ -6,7 +6,7 @@
 /*   By: atahtouh <atahtouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 10:49:35 by atahtouh          #+#    #+#             */
-/*   Updated: 2023/11/16 16:06:08 by atahtouh         ###   ########.fr       */
+/*   Updated: 2023/11/17 08:36:21 by atahtouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,6 @@
 	t_list *ft_lstlast(t_list *lst);
 	void ft_lstadd_back(t_list **lst, t_list *new);
 	void ft_lstdelone(t_list *lst, void (*del)(void*));
+	void ft_lstclear(t_list **lst, void (*del)(void*));
+	void ft_lstiter(t_list *lst, void (*f)(void *));
 	#endif
