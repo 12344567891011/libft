@@ -6,107 +6,80 @@
 /*   By: atahtouh <atahtouh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 11:33:47 by atahtouh          #+#    #+#             */
-/*   Updated: 2023/11/17 09:23:37 by atahtouh         ###   ########.fr       */
+/*   Updated: 2023/11/18 09:02:12 by atahtouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_count(char *s, char c)
+static int	ft_count(char const *s, char c)
 {
-	int i;
-	int count;
-	i = 0;
-	count = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == c)
-		{
-			count++;
-		}
-	   i++; 
-	}
-	return(count);
-}
+	int	i;
+	int	j;
 
-char *alloc_mot(char *s)
-{
-	int i;
-	char *ptr;
-	
 	i = 0;
-	ptr = (char*)malloc((ft_strlen(s) + 1) * sizeof(char));
-	if(ptr == NULL)
+	j = 0;
+	while (s[j])
 	{
-		return (NULL);
-	}
-	while (s[i] != '\0')
-	{
-		ptr[i] = s[i];
+		while (s[j] && s[j] == c)
+			j++;
+		while (s[j] && s[j] != c)
+			j++;
+		while (s[j] && s[j] == c)
+			j++;
 		i++;
 	}
-	ptr[i] = '\0';
+	return (i);
+}
+
+static int	ft_len(char const *s, char c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] && s[i] != c)
+		i++;
+	return (i);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char	**ptr;
+	int		len;
+	int		j;
+
+	if (!s)
+		return (0);
+	len = ft_count(s, c);
+	ptr = (char **)malloc((len + 1) * sizeof(char *));
+	if (!ptr)
+		return (NULL);
+	j = 0;
+	while (*s && j < len)
+	{
+		while (*s && *s == c)
+			s++;
+		if (*s && *s != c)
+		{
+			ptr[j] = ft_substr(s, 0, ft_len(s, c));
+			j++;
+		}
+		while (*s && *s != c)
+			s++;
+	}
+	ptr[j] = NULL;
 	return (ptr);
 }
 
-
-char **ft_split(char *s, char c)
+int	main(void)
 {
-	int len;
-	char **ptr;
-	
-	len = ft_count(s,c);
-	ptr = (char **)malloc((len + 1) * sizeof(char*));
-	if (ptr == NULL)
+	char *s =" asmae    th hello world ";
+	char **result = ft_split(s, ' ');
+	int i = 0;
+	while (result[i] != NULL)
 	{
-		return (NULL);
-	}
-	int i;
-	int fin;
-	int len_mot;
-	int debut;
-	char *mot;
-	int mot_indice;
-	len_mot = 0;
-	debut = 0;
-	mot_indice = 0;
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == c)
-		{
-			fin = i;
-			len_mot = fin - debut;
-			if (len_mot > 0)
-			{
-				mot = alloc_mot(s + debut);
-				ptr[mot_indice] = mot;
-				mot_indice++;
-			}
-			debut = i + 1;
-		}
+		printf("%s\n", result[i]);
 		i++;
 	}
-	len_mot = i - debut;
-	if (len_mot > 0)
-	{
-		mot = alloc_mot(s + debut);
-		ptr[mot_indice] = mot;
-		mot_indice++;
-	}
-	ptr[mot_indice] = NULL;
-	return (ptr);
-}
-
-int main(void)
-{
-    char *s = "Hello World!@This@is a@test.";
-    char **result = ft_split(s, '@');
-    int i = 0;
-    while (result[i] != NULL)
-    {
-        printf("%s\n", result[i]);
-        i++;
-    }
-    return 0;
+	return 0;
 }
